@@ -45,6 +45,7 @@ input MessageInput{
 type Query {
   conversation(id: ID!): Conversation
   me(nickname: String!): User
+  me2(id: ID!): User
   conversations: [Conversation]
   login(email: String!, password: String!): AuthData!
   users: [User]

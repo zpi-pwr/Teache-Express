@@ -12,6 +12,7 @@
 
 //This method searching '#' symbols, read text after it until meet ' ' or next '#'
 export const findTags = (message) => {
+    console.log(`Looking for tags...`)
     let tag = "";
     let isTag = false;
     let endContent = '';

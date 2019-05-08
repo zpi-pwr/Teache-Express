@@ -4,6 +4,7 @@ import jwt from 'jsonwebtoken';
 import Conversation from './models/conversation'
 import Message from './models/message'
 import User from './models/user'
+import { findTags, hideProfanities} from './bot/bot'
 
 const SECRET = 'somesupersecretkey';
 const pubsub = new PubSub();
@@ -11,18 +12,24 @@ const pubsub = new PubSub();
 
 export const resolvers = {
     Query: {
-        conversation: (root, {id}, req) => {
+        conversation: async (root, {id}, req) => {
             // if (!req.isAuth){
             //     throw new Error("Unauthenticated");
             // }
-            return Conversation.findById(id);
+            return await Conversation.findById(id);
             // return conversations.find(conversation => conversation.id === id)
         },
-        me: (root, args, req) => {
+        me: async (root, args, req) => {
             // if (!req.isAuth){
             //     throw new Error("Unauthenticated");
             // }
-            return User.findOne({nickname: args.nickname});
+            return await User.findOne({nickname: args.nickname});
+        },
+        me2: async (root, args, req) => {
+            // if (!req.isAuth){
+            //     throw new Error("Unauthenticated");
+            // }
+            return await User.findById(args.id);
         },
         conversations: (root, args, req) => {
             // if (!req.isAuth){
@@ -81,15 +88,14 @@ export const resolvers = {
             });
 
             //here is a bot
-            // const bot = require('./bot/bot');
-            // mssg = bot.hideProfanities(mssg);
-            // mssg = bot.findTags(mssg);
-            //
+            mssg = hideProfanities(mssg);
+            mssg = findTags(mssg);
+
             pubsub.publish(
                 'messageAdded',
                 {messageAdded: mssg, id_conversation: id_conversation}
             );
-            console.log(`User ${req.userId} send message ${content}`);
+            console.log(`User ${id_sender} send message ${content}`);
             return mssg.save();
         }
     },

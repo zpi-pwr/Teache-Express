@@ -67,14 +67,14 @@ export const resolvers = {
             const conv = new Conversation({name: args.name, contributorsIds: [req.userId]});
             return conv.save();
         },
-        addMessage: (root, {id_conversation, content}, req) => {
+        addMessage: (root, {id_conversation, content, id_sender}, req) => {
             // if (!req.isAuth){
             //     throw new Error("Unauthenticated");
             // }
             //changed from const to let
             let mssg = new Message({
                 id_conversation: id_conversation,
-                id_sender: req.userId,
+                id_sender: id_sender,
                 content: content,
                 tags:[],
                 date: new Date().toISOString()

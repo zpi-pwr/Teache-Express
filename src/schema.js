@@ -5,67 +5,54 @@ import {
 
 import {resolvers} from './resolvers';
 
-// type Conversation { #final
-//     id: ID!
-//     name: String
-//     messages: [Message]
-//     contributors: [User]
-// }
-
-// addAdvert(advert: AdvertInput!): Advert
-
 const typeDefs = `
 type Message {  #final
     id: ID!
     content: String
     sender: User
+    tags: [String]
     date: String
+}
+
+type Conversation { #final
+    id: ID!
+    name: String
+    messages: [Message]
+    contributors: [User]
+    avatarUrl: String
+    ethWallet: String
 }
 
 type User { #final
     id: ID!
     nickname: String
+    email: String!
     conversations: [Conversation]
 }
 
-type Conversation { #final
-    id: ID
-    name: String
-    description: String
-    tags: [String]
-    messages: [Message]
-    avatar: String
-    contributors: [User]
-}
-
-input ConversationInput { #final
-    name: String!
-    description: String
-    tags: [String]
-    avatar: String
-    contributorsIds: [String]!
+type AuthData {
+  userId: ID!
+  token: String!
+  tokenExpiration: Int!
 }
 
 input MessageInput{
   id_conversation: ID!
   content: String!
-  id_sender: String!
-}
-
-input SearchConversation{
-    name: String!
-    tags: [String]
+  id_sender: ID!
 }
 
 type Query {
   conversation(id: ID!): Conversation
-  searchConversation(search: SearchConversation!): [Conversation]
+  me(nickname: String!): User
   conversations: [Conversation]
+  login(email: String!, password: String!): AuthData!
+  users: [User]
 }
 
 type Mutation {
-  addConversation(conversation: ConversationInput!): Conversation
-  addMessage(message: MessageInput!): Message
+  addConversation(name: String!): Conversation
+  addMessage(id_conversation: ID!, content: String!): Message
 }
 
 # The subscription root type, specifying what we can subscribe to

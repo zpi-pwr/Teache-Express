@@ -20,14 +20,14 @@ type Conversation { #final
     messages: [Message]
     contributors: [User]
     avatarUrl: String
-    ethWallet: String
 }
 
 type User { #final
     id: ID!
     nickname: String
     email: String!
-    conversations: [Conversation]
+    conversations: [Conversation],
+    ethWallet: String
 }
 
 type AuthData {

@@ -6,6 +6,7 @@ const userSchema = new Schema({
     conversationsIds: [String],
     email: String,
     password: String,
+    ethWallet: String,
 });
 
 module.exports = mongoose.model('User', userSchema);

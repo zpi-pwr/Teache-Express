@@ -1,11 +1,12 @@
 {
-  "name": "PostalPigeonExpress",
+  "name": "TeacheExpress",
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
   "scripts": {
     "start": "nodemon ./server.js --exec babel-node -e js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "kill4k": "lsof | grep LISTEN | grep 4000 | awk '{ print $2 }' | xargs kill -9"
   },
   "author": "Konrad & Dmytro ",
   "license": "MIT",

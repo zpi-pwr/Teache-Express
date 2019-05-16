@@ -54,6 +54,7 @@ type Query {
 type Mutation {
   addConversation(name: String!): Conversation
   addMessage(id_conversation: ID!, content: String!, id_sender: ID!): Message
+  addUsernameToConv(id_conv: ID!, nickname: String!): Conversation
 }
 
 # The subscription root type, specifying what we can subscribe to

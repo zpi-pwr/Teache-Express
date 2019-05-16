@@ -67,12 +67,31 @@ export const resolvers = {
         }
     },
     Mutation: {
-        addConversation: (root, args, req) => {
-            // if (!req.isAuth){
+        addConversation: async (root, args, req) => {
+            if (!req.isAuth) {
+                throw new Error("Unauthenticated");
+            }
+            const conv = new Conversation({name: args.name, contributorsIds: [req.userId]});
+            const convId = conv._id;
+            const user = await User.findById(req.userId);
+            user.conversationsIds.push(convId);
+            user.save();
+            return conv.save();
+        },
+        addUsernameToConv: async (root, {nickname, id_conv}, req) => {
+            // if (!req.isAuth) {
             //     throw new Error("Unauthenticated");
             // }
-            const conv = new Conversation({name: args.name, contributorsIds: [req.userId]});
-            return conv.save();
+            const applicant = await User.findById(req.userId);
+            // if (applicant.conversationsIds.includes(id_conv)){
+                const newUser = await User.findOne({nickname: nickname});
+                const conv = await Conversation.findById(id_conv);
+                newUser.conversationsIds.push(id_conv);
+                conv.contributorsIds.push(newUser._id);
+                newUser.save();
+                return conv.save();
+            // }
+            return null;
         },
         addMessage: (root, {id_conversation, content, id_sender}, req) => {
             // if (!req.isAuth){

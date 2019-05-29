@@ -4,12 +4,12 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "npm run build && node ./build/index.js",
+    "start": "babel-node server.js",
     "build": "npm run clean && npm run build-babel",
     "test": "echo 'testy'",
     "kill": "lsof | grep LISTEN | grep 4000 | awk '{ print $2 }' | xargs kill -9",
     "clean": "rm -rf build && mkdir build",
-    "build-babel": "babel -d ./build ./src -s"
+    "build-babel": "babel -d ./build ./ -s"
   },
   "author": "Konrad & Dmytro ",
   "license": "MIT",

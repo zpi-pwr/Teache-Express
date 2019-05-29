@@ -43,7 +43,7 @@ server.use('/graphiql', graphiqlExpress({
 // We wrap the express server so that we can attach the WebSocket for subscriptions
 const ws = createServer(server);
 
-ws.listen(PORT, () => {
+ws.listen(process.env.PORT || PORT, () => {
   console.log(`GraphQL Server is now running on http://localhost:${PORT}`);
 
   // Set up the WebSocket for handling GraphQL subscriptions

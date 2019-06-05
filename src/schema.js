@@ -25,6 +25,7 @@ type Conversation { #final
 type User { #final
     id: ID!
     nickname: String
+    avatarUrl: String
     email: String!
     conversations: [Conversation],
     ethWallet: String

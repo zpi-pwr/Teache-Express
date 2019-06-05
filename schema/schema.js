@@ -66,6 +66,7 @@ const UserType = new GraphQLObjectType({
     fields: () => ({
         id: {type: GraphQLID},
         nickname: {type: GraphQLString},
+        avatarUrl: {type: GraphQLString},
         conversation: {
             type: GraphQLList(ConversationType),
             resolve(parent, args) {

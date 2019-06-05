@@ -3,6 +3,7 @@ const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
     nickname: String,
+    avatarUrl: String,
     conversationsIds: [String],
     email: String,
     password: String,
